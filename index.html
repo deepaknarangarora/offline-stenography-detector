@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offline Steganography Detector</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .card {
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .spinner {
+            display: none;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card bg-dark text-white">
+            <h2 class="text-center mb-4">Steganography Detection Tool</h2>
+            <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" onsubmit="showSpinner()">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Select Image, Audio (WAV), or Text File</label>
+                    <input class="form-control" type="file" id="file" name="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Detect</button>
+                <div class="spinner text-center" id="spinner">
+                    <div class="spinner-border text-light" role="status"></div>
+                    <p>Processing file, please wait...</p>
+                </div>
+            </form>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger mt-3">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <script>
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
